@@ -105,6 +105,7 @@ def admin_view(uname):
     posts = db.session.query(Posts).filter_by(admin_id=admin.id).order_by(Posts.date_posted.desc()).all()
     return render_template("admin_page.html",admin=admin,title=admin.username,posts=posts ,now=CUR_DATE)
 
+'''
 @app.route("/api/search")
 def search():
     search = request.args.get('q')
@@ -114,7 +115,7 @@ def search():
     print(posts)
     data = PostSchema().dump(posts, many=True)
     return jsonify(results=data)
-
+'''
 @app.route("/api/")
 @token_required
 def api_get(admin_id):
