@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="ui container">
+    <div class="ui center aligned">
+        <h1>{{ post.title }}</h1>
+    </div>
+    <div class="meta">
+        <i class="calendar icon"></i>
+        <span class="date">{{ post.date_posted }}</span>
+    </div>
+    <hr>
+    <div class="image">
+        <img width="50%" height="50%" src="{{ post.image }}">
+    </div>
+    <hr>
+    <div class="content">
+        <p class="bc">{{ post.content }}</p>
+    </div>
+    <hr>
+    <div>
+        <p>Posted by <a href="{{ url_for('admin_view',uname=post.author.username) }}"> {{ post.author.username }}</a></p>
+    </div>
+</div>
+{% endblock %}

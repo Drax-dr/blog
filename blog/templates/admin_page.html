@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ui container center aligned">
+    <h2>{{ admin.username }}</h1>
+        <h3>{{ admin.about }}</h1>
+</div>
+<br/>
+<div class="ui center aligned grid">
+    {% for posts in posts %}
+    <div class="main">
+        <div class="row">
+            <div class="ui container centered aligned card">
+                <div class="extra content">
+                    <div class="meta">
+                        <p style="font-size:17px;">by {{ posts.author.username }}</p>
+                    </div>
+                </div>
+                <div class="meta">
+                    <img href="{{ url_for('get_by_slug', slug=posts.slug) }}"src="{{ posts.image }}">
+                </div>
+                <div class="content">
+                    <a class="header" href="{{ url_for('get_by_slug', slug=posts.slug) }}">
+                        {{ posts.title }}
+                    </a>
+                    <!--<div class="description">
+                        {{ posts.content }}
+                    </div>-->
+                </div>
+                <div class="extra content">
+                    <div class="meta">
+                        <i class="calendar icon"></i>
+                        {% if posts.date_posted==now %}
+                        <span class="date">Today</span>
+                        {% else %}
+                        <span class="date">{{ posts.date_posted }}</span>
+                        {% endif %}
+                        <br/>
+                        {% if posts.author == current_user %}
+                        <form action="{{ url_for('update', slug=posts.slug) }}" method="get" style="display: inline-block;">
+                            <input type="hidden" name="_method" value="POST">
+                            <button class="ui button" type="submit">Edit</button>
+                        </form>
+                        <form action="{{ url_for('delete', slug=posts.slug) }}" method="post" style="display: inline-block;">
+                            <input type="hidden" name="_method" value="POST">
+                            <button class="ui button" type="submit">Delete</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        </div>
+    {% endfor %}
+
+</div>
+<br/>
+{% endblock %}

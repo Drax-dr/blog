@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ui container centered aligned">
+    <h1 class="ui header">Update Post</h1>
+
+    <form class="ui form" method="POST" action="{{ url_for('update',slug=post.slug) }}">
+        <div class="field">
+            <label>Title</label>
+            <input type="text" name="title" value="{{ post.title }}" required>
+        </div>
+        <div class="field">
+            <label>Content</label>
+            <textarea name="content" required></textarea>
+        </div>
+        <button class="ui button primary" type="submit">Update</button>
+    </form>
+    
+</div>
+{% endblock %}

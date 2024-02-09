@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ui container centered aligned">
+    <h1 class="ui header">Create Post</h1>
+    
+    <form class="ui form" method="POST" action="{{ url_for('add') }}" enctype="multipart/form-data">
+        <div class="field">
+            <label>Title</label>
+            <input type="text" name="title" required>
+        </div>
+        <div class="field">
+            <label>Content</label>
+            <textarea name="content" required></textarea>
+        </div>
+        
+        <div class="file">
+            <input type="file" name="img" accept="image/*" required>
+        </div>
+        <button class="ui button primary" type="submit">Create</button>
+    </form>
+</div>
+{% endblock %}

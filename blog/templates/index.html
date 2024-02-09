@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="ui center aligned grid">
+            {% for posts in post %}
+            <div class="main">
+                <div class="row">
+                    <div class="ui container centered aligned card">
+                        <div class="extra content">
+                            <div class="meta">
+                                <p style="font-size:17px;">by<a href="{{ url_for('admin_view',uname=posts.author.username) }}"> {{ posts.author.username }}</a></p>
+                            </div>
+                        </div>
+                        <div class="meta">
+                            <img src="{{ post.image }}" />
+                        </div>
+                        <!-- <img> -->
+                        <div class="content">
+                            <a class="header" href="{{ url_for('get_by_slug', id=posts.id,slug=posts.slug) }}">
+                                {{ posts.title }}
+                            </a>
+
+                        </div>
+                        <div class="extra content">
+                            <div class="meta">
+                                <i class="calendar icon"></i>
+                                {% if posts.date_posted==now %}
+                                <span class="date">Today</span>
+                                {% else %}
+                                <span class="date">{{ now - posts.date_posted }} ago</span>
+                                {% endif %}
+                                <br/>
+                                {% if posts.author == current_user %}
+                                <form action="{{ url_for('update', slug=posts.slug) }}" method="get" style="display: inline-block;">
+                                    <input type="hidden" name="_method" value="POST">
+                                    <button class="ui button" type="submit">Edit</button>
+                                </form>
+                                <form action="{{ url_for('delete', slug=posts.slug) }}" method="post" style="display: inline-block;">
+                                    <input type="hidden" name="_method" value="POST">
+                                    <button class="ui button" type="submit">Delete</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <br/>
+                <br/>
+            {% endfor %}
+        </div>
+
+        <script type="text/javascript">
+            $(function() {
+                $("#srch").autocomplete({
+                    source:function(request, response) {
+                        $.getJSON("{{url_for('search')}}",{
+                            q: request.term, // in flask, "q" will be the argument to look for using request.args
+                        }, function(data) {
+                            response(data.matching_results); // matching_results from jsonify
+                        });
+                    },
+                    minLength: 2,
+                    select: function(event, ui) {
+                        console.log(ui.item.value); // not in your question, but might help later
+                    }
+                });
+            })
+            
+            </script>
+        
+{% endblock %}
